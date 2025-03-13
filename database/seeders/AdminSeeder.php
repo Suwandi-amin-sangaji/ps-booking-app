@@ -21,5 +21,13 @@ class AdminSeeder extends Seeder
             'phone' => '082273738383',
             'role' =>'admin',
         ]);
+
+        User::create([
+            'name' => 'Customer',
+            'email' => 'customer@gmail.com',
+            'password' => Hash::make('password'),
+            'phone' => '082273738383',
+            'role' =>'customer',
+        ]);
     }
 }
