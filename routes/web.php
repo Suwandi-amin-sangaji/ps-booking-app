@@ -20,21 +20,11 @@ Route::get('register', [RegisterController::class, 'showRegistrationForm'])->nam
 Route::post('register', [RegisterController::class, 'register']);
 
 // Booking Routes
-Route::get('/', [BookingController::class, 'index'])->name('booking.index');
-Route::get('/check-availability', [BookingController::class, 'checkAvailability'])->name('booking.check-availability');
-Route::post('/booking/store', [BookingController::class, 'store'])->name('booking.store');
-// Route::get('/booking/payment/{booking}', [BookingController::class, 'payment'])->name('booking.payment');
-// Route::get('/booking/confirmation/{booking}', [BookingController::class, 'confirmation'])->name('booking.confirmation');
-// Route::get('/booking/history', [BookingController::class, 'history'])->name('booking.history');
-
-// // Payment Routes
-// Route::get('/payment/finish', [PaymentController::class, 'finish'])->name('payment.finish');
-// Route::get('/payment/unfinish', [PaymentController::class, 'unfinish'])->name('payment.unfinish');
-// Route::get('/payment/error', [PaymentController::class, 'error'])->name('payment.error');
-// Route::post('/payment/notification', [PaymentController::class, 'notification'])->name('payment.notification');
-
-// Payment Routes (Protected by auth middleware)
 Route::middleware('auth')->group(function () {
+    Route::get('/', [BookingController::class, 'index'])->name('booking.index');
+    Route::get('/check-availability', [BookingController::class, 'checkAvailability'])->name('booking.check-availability');
+    Route::post('/booking/store', [BookingController::class, 'store'])->name('booking.store');
+
     Route::get('/booking/payment/{booking}', [BookingController::class, 'payment'])->name('booking.payment');
     Route::get('/booking/confirmation/{booking}', [BookingController::class, 'confirmation'])->name('booking.confirmation');
     Route::get('/booking/history', [BookingController::class, 'history'])->name('booking.history');

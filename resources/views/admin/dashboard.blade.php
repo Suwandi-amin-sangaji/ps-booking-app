@@ -97,16 +97,16 @@
                             </thead>
                             <tbody>
                                 @forelse($todayBookings as $booking)
-                                <tr>
-                                    <td>{{ $booking->time_slot }}</td>
-                                    <td>{{ $booking->customer_name }}</td>
-                                    <td>{{ $booking->service_name }}</td>
-                                    <td>{!! $booking->status_badge !!}</td>
-                                </tr>
+                                    <tr>
+                                        <td>{{ $booking->time_slot }}</td>
+                                        <td>{{ $booking->customer_name }}</td>
+                                        <td>{{ $booking->service_name }}</td>
+                                        <td>{!! $booking->status_badge !!}</td>
+                                    </tr>
                                 @empty
-                                <tr>
-                                    <td colspan="4" class="text-center py-3">Tidak ada booking untuk hari ini</td>
-                                </tr>
+                                    <tr>
+                                        <td colspan="4" class="text-center py-3">Tidak ada booking untuk hari ini</td>
+                                    </tr>
                                 @endforelse
                             </tbody>
                         </table>
@@ -138,21 +138,22 @@
                             </thead>
                             <tbody>
                                 @forelse($recentBookings as $booking)
-                                <tr>
-                                    <td>
-                                        <a href="{{ route('admin.bookings.show', $booking) }}" class="text-decoration-none">
-                                            {{ $booking->booking_code }}
-                                        </a>
-                                    </td>
-                                    <td>{{ $booking->booking_date->format('d/m/Y') }}</td>
-                                    <td>{{ $booking->customer_name }}</td>
-                                    <td>{{ $booking->formatted_total_price }}</td>
-                                    <td>{!! $booking->status_badge !!}</td>
-                                </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="{{ route('admin.bookings.show', $booking) }}"
+                                                class="text-decoration-none">
+                                                {{ $booking->booking_code }}
+                                            </a>
+                                        </td>
+                                        <td>{{ $booking->booking_date->format('d/m/Y') }}</td>
+                                        <td>{{ $booking->customer_name }}</td>
+                                        <td>{{ $booking->formatted_total_price }}</td>
+                                        <td>{!! $booking->status_badge !!}</td>
+                                    </tr>
                                 @empty
-                                <tr>
-                                    <td colspan="5" class="text-center py-3">Belum ada booking</td>
-                                </tr>
+                                    <tr>
+                                        <td colspan="5" class="text-center py-3">Belum ada booking</td>
+                                    </tr>
                                 @endforelse
                             </tbody>
                         </table>
@@ -181,52 +182,52 @@
 @endsection
 
 @section('scripts')
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Revenue Chart
-        const ctx = document.getElementById('revenueChart').getContext('2d');
-        const chartData = @json($chartData);
-        
-        const months = [
-            'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-            'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
-        ];
-        
-        const revenueChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: months,
-                datasets: [{
-                    label: 'Pendapatan (Rp)',
-                    data: Object.values(chartData),
-                    backgroundColor: 'rgba(99, 102, 241, 0.5)',
-                    borderColor: 'rgba(99, 102, 241, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            callback: function(value) {
-                                return 'Rp ' + value.toLocaleString('id-ID');
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Revenue Chart
+            const ctx = document.getElementById('revenueChart').getContext('2d');
+            const chartData = @json($chartData);
+            console.log(chartData);
+            const months = [
+                'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+                'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+            ];
+
+            const revenueChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: months,
+                    datasets: [{
+                        label: 'Pendapatan (Rp)',
+                        data: Object.values(chartData),
+                        backgroundColor: 'rgba(99, 102, 241, 0.5)',
+                        borderColor: 'rgba(99, 102, 241, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return 'Rp ' + value.toLocaleString('id-ID');
+                                }
                             }
                         }
-                    }
-                },
-                plugins: {
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return 'Rp ' + context.raw.toLocaleString('id-ID');
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return 'Rp ' + context.raw.toLocaleString('id-ID');
+                                }
                             }
                         }
                     }
                 }
-            }
+            });
         });
-    });
-</script>
+    </script>
 @endsection
